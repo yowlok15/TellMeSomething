@@ -1,0 +1,127 @@
+<%- include('../partials/head') %>
+    <%- include('../partials/header') %>
+
+        <body>
+            <!-- Body Start -->
+
+            <div class="container-fluid bg-light">
+                <div class="container">
+                    <header>
+                        <h2> <span class="text-primary">You got something to share ?</span> <strong>Let me know
+                                below!!</strong></h2>
+                    </header>
+                    <div class="row align-items-center">
+                        <div>
+                            <div class="py-5 px-4 px-sm-5" style="background:white">
+                                <form id="form_id" class="py-5" style ="padding-top: 0rem !important;">
+                                    <div class="form-group">
+                                        <h5>Give me some tips who you are</h5>
+                                        <input type="radio" id="expose" name="giveName" value="yes"> Yes, I will
+                                        expose my nickname
+                                        <input type="radio" id="no-expose" name="giveName" value="no"> No give me a
+                                        random name then
+                                    </div>
+                                    <div id="user-name" class="form-group" style="display:none">
+                                        <input type="text" class="form-control border-0 p-4" name="name"
+                                            placeholder="Your Name" style="box-shadow: inset 0 15px 15px rgb(0 0 0 / 8%);" />
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="user-message" id="user-message" data-target-input="nearest">
+                                            <input type="text" class="form-control border-0 p-4" placeholder="message" 
+                                            name="message" style="box-shadow: inset 0 15px 15px rgb(0 0 0 / 8%);"/>
+                                        </div>
+                                    </div>
+                                    <div class="error-class" style="display:block; padding:10px"></div>
+                                    <div>
+                                        <button class="btn btn-dark btn-block border-0 py-3" type="submit">Send</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Body End-->
+            <%- include('../partials/footer') %>
+            <!-- Back to Top -->
+            <a href="#" class="btn btn-lg btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+            </div>
+
+            <!-- local javascript-->
+            <script type="text/javascript">
+                if (document.querySelector('input[name="giveName"]')) {
+                    document.querySelectorAll('input[name="giveName"]').forEach((elem) => {
+                        elem.addEventListener("change", function (event) {
+                            var item = event.target.value;
+                            var nameDiv = document.getElementById("user-name");
+                            if (item == "yes") {
+                                nameDiv.style.display = "block";
+                            }
+                            else {
+                                nameDiv.style.display = "none";
+                            }
+                            console.log(item);
+                        });
+                    });
+                }
+                document.getElementById('form_id').addEventListener("submit", function (evt) {
+                    const thisForm = document.getElementById('form_id');
+                    evt.preventDefault();
+                    const formData = new FormData(thisForm).entries()
+                    jsonString = JSON.stringify(Object.fromEntries(formData))
+                    var jsonObj = JSON.parse(jsonString);
+                    const format1 = "YYYY-MM-DD HH:mm:ss"
+                    var dateNow = Date.now();
+
+                    dateTimestring = moment(dateNow).format(format1);
+                    isAnonymous = false
+                    if (jsonObj['name'] == '') {
+                        jsonObj['name'] = "Random Name"
+                        isAnonymous = true
+                    }
+                    errorDivs = document.getElementsByClassName("error-class");
+                    const resp = axios.post('/message', {
+                        name: jsonObj['name'],
+                        sentMessage: jsonObj['message'],
+                        createdDateTime: dateTimestring,
+                        isAnonymous: isAnonymous,
+                        review: false
+                    })
+                        .then(function (response) {
+                            for (const errorDiv of errorDivs) {
+                                errorDiv.style.display = 'block';
+                                errorDiv.style.color = 'green';
+                                errorDiv.innerHTML = "Message sent succesffuly"
+                            }
+                        })
+                        .catch((error) => {
+                            for (const errorDiv of errorDivs) {
+                                errorDiv.style.display = 'block';
+                                errorDiv.style.color = 'red';
+                                errorDiv.innerHTML = error.response.data.message[0].replace('sentMessage', 'message')
+                            }
+                        })
+                        document.getElementById("form_id").reset();
+                }, true);
+            </script>
+            <!-- JavaScript Libraries -->
+            <script src="https://momentjs.com/downloads/moment.js"></script>
+            <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+            <script src="lib/easing/easing.min.js"></script>
+            <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+            <script src="lib/tempusdominus/js/moment.min.js"></script>
+            <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+            <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+            <!-- Contact Javascript File -->
+            <script src="mail/jqBootstrapValidation.min.js"></script>
+            <script src="mail/contact.js"></script>
+
+            <!-- Template Javascript -->
+            <script src="js/main.js"></script>
+        </body>
+
+        </html>

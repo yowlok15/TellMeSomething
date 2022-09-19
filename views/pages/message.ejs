@@ -1,0 +1,116 @@
+
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<body style="margin:0;">
+    <div id="loader" style="display:none"></div>
+
+    <!-- Body Start -->
+    <div >
+        <div class="row">
+            <div class="col-md-12">
+                <div class="blog-comment">
+                    <h3 class="text-success">Messages</h3>
+                    <hr/>
+                    <ul class="all-comments">
+                        <% messages.forEach((message)=> { %>
+                    <li class="clearfix">
+                        <% if(message.isAnonymous){ %>
+                            <i class="fa-solid fa-user-secret fa-4x" style="float: left"></i>
+                          <% } else{ %>  
+                            <i class="fa-solid fa-user fa-4x" style="float: left"></i>
+                         <% } %>
+                      <div class="post-comments">
+                          <p class="meta"><%= message.createdDateTime %> <%= message.name %> says :</p>
+                          <p> <%= message.message %> </p>
+                      </div>
+                    </li>
+                    <% }) %>
+                    </ul>
+                </div>
+                <div id="page-selection" style ="position: absolute; left: 50%; top: 95%; transform: translate(-50%, -50%);"></div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+    <!-- Body End -->
+<%- include('../partials/footer') %>
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+    <!-- JavaScript Libraries -->
+        <!-- Template Javascript -->
+
+         <script>
+
+function showLoader() {
+  document.getElementById("loader").style.display = "block";
+}
+function hideLoader() {
+  document.getElementById("loader").style.display = "none";
+}
+    // init bootpag
+    $('#page-selection').bootpag({
+   total: 10,
+   page: 1,
+   maxVisible: 5,
+}).on('page', function(event, num){
+    let currentPage;
+    showLoader()
+    $.ajax({
+    url: "/message/all",
+    type: 'GET',
+    data: {  page: num} ,
+    success: function(response) {
+        data = response.messages
+        rawHtmlString = ""
+
+        data.forEach(function (message) {   
+            if (message.isAnonymous){
+            console.log('i am anynymous true', message.name + message.createdDateTime)
+            rawHtmlString+=('<li class="clearfix">'+
+                     '<i class="fa-solid fa-user-secret fa-4x" style="float: left"></i>'+
+                     '<div class="post-comments">'+
+                          '<p class="meta">' + message.createdDateTime + ' ' + message.name + '</a> says :</p>'+
+                          '<p>'+message.message+'</p>'+
+                      '</div></li>')
+        }
+        else{
+            rawHtmlString+=('<li class="clearfix">'+             
+                     '<i class="fa-solid fa-user fa-4x" style="float: left"></i>'+
+                     '<div class="post-comments">'+
+                          '<p class="meta">' + message.createdDateTime + ' ' + message.name + '</a> says :</p>'+
+                          '<p>'+message.message+'</p>'+
+                      '</div></li>')
+        }    
+
+        })
+        $('.all-comments').html(rawHtmlString)
+        },
+        error: function(errorResponse) {
+            $('.all-comments').html("")
+        },
+        complete: function(data) {
+            hideLoader();
+        }
+    });
+});
+        </script>          
+    <script src="https://twitter.github.io/typeahead.js/js/handlebars.js"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
