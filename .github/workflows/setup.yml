@@ -25,12 +25,3 @@ jobs:
 
       # Runs package manager
       - run: npm --version
-      - run: npm nest --version
-      - run: npm node --version
-      - uses: actions/checkout@v3
-      - run: npm install package.json
-      - run: npx @nestjs/cli --version
-      - run: npm run prebuild
-      - run: tsc -p tsconfig.build.json
-      - run: npx @nestjs/cli build
-      - run: node dist/main.js
