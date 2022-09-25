@@ -21,7 +21,7 @@
                          <% } %>
                       <div class="post-comments">
                           <p class="meta"><%= message.createdDateTime %> <%= message.name %> says :</p>
-                          <p> <%= message.message %> </p>
+                          <p><%= message.sentMessage %> </p>
                       </div>
                     </li>
                     <% }) %>
@@ -71,7 +71,7 @@ function hideLoader() {
                      '<i class="fa-solid fa-user-secret fa-4x" style="float: left"></i>'+
                      '<div class="post-comments">'+
                           '<p class="meta">' + message.createdDateTime + ' ' + message.name + '</a> says :</p>'+
-                          '<p>'+message.message+'</p>'+
+                          '<p>'+message.sentMessage+'</p>'+
                       '</div></li>')
         }
         else{
@@ -79,7 +79,7 @@ function hideLoader() {
                      '<i class="fa-solid fa-user fa-4x" style="float: left"></i>'+
                      '<div class="post-comments">'+
                           '<p class="meta">' + message.createdDateTime + ' ' + message.name + '</a> says :</p>'+
-                          '<p>'+message.message+'</p>'+
+                          '<p>'+message.sentMessage+'</p>'+
                       '</div></li>')
         }    
 
@@ -99,15 +99,6 @@ function hideLoader() {
     <script src="https://momentjs.com/downloads/moment.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
-    <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
