@@ -24,4 +24,4 @@ jobs:
     steps:
 
       # Runs package manager
-      - run: npm --version
+      - run: echo "Hello Word"
