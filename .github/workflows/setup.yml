@@ -29,4 +29,5 @@ jobs:
       - run: npm node --version
       - uses: actions/checkout@v3
       - run: npm install package.json
-      - run: nest --version
+      - run: npx @nestjs/cli --version
+      - run: npx @nestjs/cli start
