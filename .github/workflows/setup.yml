@@ -26,6 +26,6 @@ jobs:
       # Runs package manager
       - run: npm --version
       - run: npm node --version
-      - uses: action/checkout/@v3
+      - uses: actions/checkout@v3
       - run: npm install
       - run: npm run start
