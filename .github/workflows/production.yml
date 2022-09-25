@@ -16,3 +16,4 @@ jobs:
           heroku_app_name: "tell-me-something-1" #Must be unique in Heroku
           heroku_email: "juzfun@outlook.com"
           branch: "master"
+          usedocker: true
