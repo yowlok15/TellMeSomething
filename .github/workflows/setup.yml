@@ -32,5 +32,5 @@ jobs:
       - run: npx @nestjs/cli --version
       - run: npm run prebuild
       - run: tsc -p tsconfig.build.json
-      - run: npm run build
+      - run: npx @nestjs/cli build
       - run: node dist/main.js
