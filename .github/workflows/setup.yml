@@ -25,7 +25,7 @@ jobs:
 
       # Runs package manager
       - run: npm --version
-      - run: nest --version
+      - run: npm nest --version
       - run: npm node --version
       - uses: actions/checkout@v3
       - run: npm install package.json
