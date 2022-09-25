@@ -30,4 +30,4 @@ jobs:
       - uses: actions/checkout@v3
       - run: npm install package.json
       - run: npx @nestjs/cli --version
-      - run: npx @nestjs/cli start
+      - run: node dist/main
